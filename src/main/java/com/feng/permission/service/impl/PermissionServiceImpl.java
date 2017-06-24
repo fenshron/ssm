@@ -189,5 +189,13 @@ public class PermissionServiceImpl extends BaseMybatisDao<UPermissionMapper> imp
 		return permissionMapper.findPermissionByUserId(userId);
 	}
 
+	@Override
+	public Map findPage2(Map<String, Object> resultMap,
+			Integer pageNo, Integer pageSize) {
+		Map map=new HashMap();
+		map.put("rows", super.findList(resultMap, pageNo, pageSize));
+		map.put("total", super.findList(resultMap,null,null).size());
+		return map;
+	}
 	
 }

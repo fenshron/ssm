@@ -119,14 +119,17 @@ public class BaseMybatisDao<T> extends SqlSessionDaoSupport {
 	 */
 	public List findList(String sqlId, Map<String, Object> params,
 			Integer pageNo, Integer pageSize) {
-		pageNo = null == pageNo ? 1 : pageNo;
-		pageSize = null == pageSize ? 10 : pageSize;
+		
+		
+			pageNo = null == pageNo ? 1 : pageNo;
+			pageSize = null == pageSize ? 10 : pageSize;
 
-		int offset = (pageNo - 1) * pageSize;
-		String page_sql = String.format(" limit %s , %s", offset,pageSize);
-		params.put("page_sql", page_sql);
+			int offset = (pageNo - 1) * pageSize;
+			//int offset = pageNo;
+			String page_sql = String.format(" limit %s , %s", offset,pageSize);
+			params.put("page_sql", page_sql);
+		
 		sqlId = String.format("%s.%s", NAMESPACE,sqlId) ;
-
 		List resultList = this.getSqlSession().selectList(sqlId, params);
 		return resultList;
 	}

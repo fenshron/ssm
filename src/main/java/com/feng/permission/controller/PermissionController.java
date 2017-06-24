@@ -1,5 +1,6 @@
 package com.feng.permission.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import com.feng.common.controller.BaseController;
 import com.feng.common.model.UPermission;
 import com.feng.common.utils.LoggerUtils;
 import com.feng.core.mybatis.page.Pagination;
+import com.feng.permission.bo.UPermissionBo;
 import com.feng.permission.service.PermissionService;
 /**
  * 
@@ -36,10 +38,18 @@ public class PermissionController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value="index")
-	public ModelAndView index(String findContent,ModelMap modelMap,Integer pageNo){
+	public ModelAndView index(){
+		return new ModelAndView("permission/index");
+	}
+	@RequestMapping(value="index2",produces={"application/json"})
+	@ResponseBody
+	public Map index2(String findContent,ModelMap modelMap,Integer pageNumber,Integer pageSize){
 		modelMap.put("findContent", findContent);
-		Pagination<UPermission> permissions = permissionService.findPage(modelMap,pageNo,pageSize);
-		return new ModelAndView("permission/index","page",permissions);
+		//Pagination<UPermission> permissions = permissionService.findPage(modelMap,pageNo,pageSize);
+		Map list = permissionService.findPage2(modelMap, pageNumber, pageSize);
+		return list;
+		//return new ModelAndView("permission/index","page",list);
+		
 	}
 	/**
 	 * 权限添加
